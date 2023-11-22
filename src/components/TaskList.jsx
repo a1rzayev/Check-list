@@ -1,16 +1,19 @@
-import { useSelector } from "react-redux";
 import Task from "./Task";
 
-function TasksList() {
-    const tasks = useSelector(tasks => tasks.tasks);
-    console.log(tasks);
+function TaskList({ tasks }) {
     return (
-        <ul>
-            {
-                tasks.map(taskData => <Task key={taskData.id} taskData={taskData}/>)
-            }
-        </ul>
-    )
+        <>
+            {tasks.length ? (
+                <ul>
+                    {tasks.map((task) => (
+                        <li key={task.id}><Task task={task} /></li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No tasks</p>
+            )}
+        </>
+    );
 }
 
-export default TasksList;
+export default TaskList;

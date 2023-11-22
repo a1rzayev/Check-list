@@ -1,58 +1,50 @@
-import { deleteTask } from "../reducer/slicer.jsx";
-import store from "../reducer/store.jsx";
-import {Form, useRouteLoaderData } from "react-router-dom";
+import { Form, NavLink, redirect, useFetcher } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteTask, completeTask } from "../reducer/slice";
+import DeleteTaskForm from "./forms/DeleteTaskForm";
 
-export async function loader({params}){
-    const taskList = store.getState();
-    const task = taskList.tasks.find(e => e.id === params.taskid);
-    console.log(task);
-    return {element: task};
+function Task({ task }) {
+    const dispatch = useDispatch();
+
+    const handleDeleteClick = async (e) => {
+        dispatch(deleteTask({ id: task.id }));
+    };
+
+    return (
+        <>
+            <CheckBox task={task} />
+            <NavLink to={`tasks/${task.id}`}>
+                {task.title ? <>{task.title}</> : <i>No Title</i>}
+                {""}
+            </NavLink>
+            <Form action={`tasks/${task.id}/edit`}>
+                <button type="submit">Edit</button>
+            </Form>
+            <DeleteTaskForm task={task} />
+        </>
+    );
 }
 
-function Task() {
-    const {element} = useRouteLoaderData("taskinfo");
-    
+function CheckBox({ task }) {
+    const fetcher = useFetcher();
+    const dispatch = useDispatch();
+    let isCompleted = task.completed;
+
+    const handleClick = (e) => {
+        dispatch(completeTask({ id: task.id }));
+    };
+
     return (
-
-        <div id="task">
-        <div>
-        <h1>
-            {element.name}
-        </h1>
-
-        <p>         
-            {element.content}
-        </p>
-        <p>         
-            {element.isDone}
-        </p>
-        <p>         
-            {element.id ? "not complited" : element.id}
-        </p>
-
-        <div>
-          <Form action="edit">
-            <button type="submit">Edit</button>
-          </Form>
-          <Form
-            method="delete"
-            action="destroy"
-            onSubmit={(event) => {
-              if (
-                !window.confirm(
-                  "Please confirm you want to delete this record."
-                )
-              ) {
-                event.preventDefault();
-              }
-            }}
-          >
-            <button type="submit">Delete</button>
-          </Form>
-        </div>
-      </div>
-      </div>
-    )
+        <fetcher.Form method="post" action={`tasks/${task.id}/complete`}>
+            <button
+                name="isCompleted"
+                value={isCompleted ? "true" : "false"}
+                onClick={handleClick}
+            >
+                {isCompleted ? "▣" : "▢"}
+            </button>
+        </fetcher.Form>
+    );
 }
 
 export default Task;
