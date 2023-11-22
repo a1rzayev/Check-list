@@ -6,18 +6,10 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Index from "./routes";
 import ErrorPage from "./components/ErrorPage";
-import Root, {
-	loader as rootLoader,
-    action as rootAction,
-} from "./routes/root";
-import EditTask, { 
-	action as editTaskAction,
-} from "./routes/edit";
-import Task, { 
-	loader as taskLoader,
-} from "./routes/task";
+import Root, { loader as rootLoader, action as rootAction } from "./routes/root";
+import EditTask, { action as editTaskAction} from "./routes/edit";
+import Task, { loader as taskLoader } from "./routes/task";
 import { action as completeTaskAction } from "./routes/complete";
-// import { action as destroyTaskAction } from "./routes/destroy";
 
 const container = document.getElementById("root");
 
@@ -51,7 +43,6 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "tasks/:taskId/destroy",
-                        // action: destroyTaskAction,
                       },
                     {
                         path: "tasks/:taskId/complete",

@@ -4,7 +4,6 @@ import { matchSorter } from "match-sorter";
 import TaskList from "../components/TaskList";
 import { getFirstTask } from "../tasks";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 import SearchForm from "../components/forms/SearchForm";
 
 export async function action() {
@@ -19,16 +18,11 @@ export async function loader({ request }) {
 }
 
 function Root() {
-    const [sortMode, setSortMode] = useState("All");
     const { q } = useLoaderData();
     const tasks = useSelector((state) => state.tasksReducer);
     const tasksByQuery = q
         ? matchSorter(tasks, q, { keys: ["title", "description"] })
         : tasks;
-    const filteredTasks =
-            sortMode === "All" ? tasksByQuery
-            : sortMode === "Completed" ? tasksByQuery.filter((task) => task.completed)
-            : tasksByQuery.filter((task) => !task.completed);
     const navigation = useNavigation();
 
     return (
@@ -38,37 +32,13 @@ function Root() {
                     <SearchForm query={q} />
                     <NewForm />
                 </div>
-                <div>
-                    <button
-                        onClick={() => {
-                            setSortMode("All");
-                        }}
-                    >
-                        All
-                    </button>
-                    <button
-                        onClick={() => {
-                            setSortMode("Completed");
-                        }}
-                    >
-                        Completed
-                    </button>
-                    <button
-                        onClick={() => {
-                            setSortMode("Not Completed");
-                        }}
-                    >
-                        Not Completed
-                    </button>
-                </div>
                 <nav>
-                    <TaskList tasks={filteredTasks} />
+                    <TaskList tasks={tasksByQuery} />
                 </nav>
             </div>
             <div
                 id="detail"
-                className={navigation.state === "loading" ? "loading" : ""}
-            >
+                className={navigation.state === "loading" ? "loading" : ""}>
                 <Outlet />
             </div>
         </>
