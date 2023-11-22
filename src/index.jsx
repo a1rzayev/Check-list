@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         action: rootAction,
         children: [
             {
-                errorElement: <div>Oops! There was an error.</div>,
+                errorElement: <div>Unecpected error!</div>,
                 children: [
                     {
                         index: true,

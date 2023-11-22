@@ -1,14 +1,14 @@
 import { Form, NavLink, redirect, useFetcher } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteTask, completeTask } from "../reducer/slice";
-import DeleteTaskForm from "./forms/DeleteTaskForm";
+import DeleteForm from "./forms/DeleteForm";
 
 function Task({ task }) {
     const dispatch = useDispatch();
 
-    const handleDeleteClick = async (e) => {
-        dispatch(deleteTask({ id: task.id }));
-    };
+    // const handleDeleteClick = async (e) => {
+    //     dispatch(deleteTask({ id: task.id }));
+    // };
 
     return (
         <>
@@ -20,7 +20,7 @@ function Task({ task }) {
             <Form action={`tasks/${task.id}/edit`}>
                 <button type="submit">Edit</button>
             </Form>
-            <DeleteTaskForm task={task} />
+            <DeleteForm task={task} />
         </>
     );
 }
