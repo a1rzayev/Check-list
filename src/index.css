@@ -32,6 +32,9 @@ button {
 }
 button {
   font-weight: 500;
+  border-radius: 1px;
+  border: solid #121212 ;
+  background-color: aqua;
   font-size: 15px;
 }
 
@@ -54,7 +57,7 @@ button:active {
 
 #sidebar {
   width: 22rem;
-  background-color: lightgray;
+  background-color: rgb(163, 61, 61);
   border-right: solid 1px #e3e3e3;
   display: flex;
   flex-direction: column;
@@ -157,11 +160,11 @@ button:active {
 }
 
 #sidebar nav a:hover {
-  background: #e3e3e3;
+  background: #6d1a1a;
 }
 
 #sidebar nav a {
-  background: #e3e3e3;
+  background: #ac2c2c;
 }
 
 #sidebar nav a.active {
@@ -188,7 +191,7 @@ button:active {
 #zero-state {
   margin: 2rem auto;
   text-align: center;
-  color: #18181;
+  color: #181818;
 }
 
 #zero-state a {
