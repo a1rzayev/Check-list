@@ -1,3 +1,5 @@
+import { deleteTask } from "../reducer/slicer.jsx";
+import store from "../reducer/store.jsx";
 import {Form, useRouteLoaderData } from "react-router-dom";
 
 export async function loader({params}){
